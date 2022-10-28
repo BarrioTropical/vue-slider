@@ -1,11 +1,13 @@
 // Test se funziona vue
-const { createApp } = Vue
+const { createApp } = Vue;
 createApp({
     data() {
         return {   
         //message: 'Hello Vue!'
         //la prima immagine avrà indice 0
         activeIndex: 0,
+
+        autoscroll: null,
         // array informazioni slider
         slides: [
             {
@@ -48,7 +50,24 @@ createApp({
             if(this.activeIndex > maxIndex){
                 this.activeIndex = indexMin;
             }
+        },
+        autoScroll(){
+            this.autoscroll = setInterval(() => {
+                this.next()
+            }, 2000 )
+        },
+        stopAutoScroll(){
+            clearInterval(
+                this.autoscroll
+            )
+            this.autoscroll = null
+        },
+        setImage(i){
+            this.activeIndex = i;
         }
+    },
+    mounted(){
+        this.autoScroll();
     }
 }).mount('#app')
 
